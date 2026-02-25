@@ -59,7 +59,12 @@ export async function saveExpediente(payload, files = {}) {
     urls.img_factura = await uploadFile(BUCKETS.FACTURAS, files.factura, path)
   }
 
-  const row = { ...payload, ...urls }
+const row = { 
+  ...payload, 
+  ...urls,
+  monto: payload.monto === '' || payload.monto === null ? null : Number(payload.monto),
+  fecha_escritura: payload.fecha_escritura === '' ? null : payload.fecha_escritura,
+}
 
   if (row.id) {
     // UPDATE
